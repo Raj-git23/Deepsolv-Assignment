@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Cards from '../components/Cards';
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import Pagination from "../components/Pagination";
+import PokemonList from "../components/PokemonList";
+import Filter from "../components/Filter";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -8,48 +9,101 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [types, setTypes] = useState([]); // To store all Pokemon types
+  const [selectedType, setSelectedType] = useState(""); // To store selected type
 
   const itemsPerPage = 12; // Number of Pokémon per page
 
+  const capitalizeFirstLetter = (str) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
 
-  const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
-  useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        setLoading(true);
-
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}&offset=${(currentPage - 1) * itemsPerPage}`);
+  // Fetch all Pokémon types (like fire, water, etc.)
+  const fetchTypes = async () => {
+    try {
+      const response = await fetch("https://pokeapi.co/api/v2/type");
+      if (response.ok) {
         const data = await response.json();
+        setTypes(data.results);
+      } else {
+        console.error("Error fetching types:", response.status);
+      }
+    } catch (err) {
+      console.error("Error fetching types:", err);
+    }
+  };
 
-        // Fetch detailed data for each Pokémon
-        const pokemonDetails = await Promise.all(
+  // Fetch Pokémon based on type and pagination
+  const fetchPokemons = async (type = "", page = 1) => {
+    try {
+      setLoading(true);
+      let url = `https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}&offset=${
+        (page - 1) * itemsPerPage
+      }`;
+      if (type) {
+        // Fetch Pokémon of selected type
+        url = `https://pokeapi.co/api/v2/type/${type}`;
+      }
 
-          data.results.map(async (pokemon) => {
-            const pokeResponse = await fetch(pokemon.url);
+      const response = await fetch(url);
+      const data = await response.json();
+
+      let pokemonDetails = [];
+      if (type) {
+        // Get Pokémon details for the selected type
+        pokemonDetails = await Promise.all(
+          data.pokemon.map(async (poke) => {
+            const pokeResponse = await fetch(poke.pokemon.url);
             const pokeData = await pokeResponse.json();
-            
             return {
-              name: capitalizeFirstLetter(pokeData.name), 
-              image: pokeData.sprites.other['official-artwork'].front_default, 
-              type: capitalizeFirstLetter(pokeData.types.map((type) => type.type.name).join(', ')), 
-              gender: pokeData.gender || 'Unknown',
-              region: pokeData.generation ? pokeData.generation.name : 'Unknown', 
+              name: capitalizeFirstLetter(pokeData.name),
+              image: pokeData.sprites.other["official-artwork"].front_default,
+              type: capitalizeFirstLetter(
+                pokeData.types.map((type) => type.type.name).join(", ")
+              ),
+              gender: pokeData.gender || "Unknown",
+              region: pokeData.generation
+                ? pokeData.generation.name
+                : "Unknown",
             };
           })
         );
-
-        setPokemonList(pokemonDetails);
-        setTotalPages(Math.ceil(data.count / itemsPerPage)); // Calculate total pages
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
+      } else {
+        // Get general Pokémon list without filtering by type
+        pokemonDetails = await Promise.all(
+          data.results.map(async (pokemon) => {
+            const pokeResponse = await fetch(pokemon.url);
+            const pokeData = await pokeResponse.json();
+            return {
+              name: capitalizeFirstLetter(pokeData.name),
+              image: pokeData.sprites.other["official-artwork"].front_default,
+              type: capitalizeFirstLetter(
+                pokeData.types.map((type) => type.type.name).join(", ")
+              ),
+              gender: pokeData.gender || "Unknown",
+              region: pokeData.generation
+                ? pokeData.generation.name
+                : "Unknown",
+            };
+          })
+        );
       }
-    };
 
-    fetchPokemons();
-  }, [currentPage]); // Fetch data when the page changes
+      setPokemonList(pokemonDetails);
+      setTotalPages(Math.ceil(data.count / itemsPerPage)); // Update the total pages
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTypes(); // Fetch all Pokémon types when the component mounts
+  }, []);
+
+  useEffect(() => {
+    fetchPokemons(selectedType, currentPage); // Fetch Pokémon when the page or selected type changes
+  }, [selectedType, currentPage]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -63,38 +117,38 @@ const Home = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-wrap justify-center">
-        {pokemonList.map((pokemon, index) => (
-          <Cards
-            key={index}
-            image={pokemon.image}
-            title={pokemon.name}
-            type={pokemon.type}
-            region={pokemon.region}
-            gender={pokemon.gender}
-          />
-        ))}
-      </div>
+    <div className="flex relative flex-col items-center">
+      {/* Background Image Layer with Opacity */}
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          backgroundImage: "url(../../images/c.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "cover",
+          backgroundRepeat: "no-repeat",
+          height: "100%",
+          opacity: 0.25, // Adjust opacity of the background image
+          zIndex: -1, // Ensures the background stays behind content
+        }}
+      />
+      
+      {/* TypeDropdown component */}
+      <Filter
+        types={types}
+        selectedType={selectedType}
+        onSelectType={setSelectedType}
+      />
 
-      {/* Pagination controls */}
-      <div className="flex justify-center items-center my-4">
-        <button 
-          onClick={handlePrevPage} 
-          disabled={currentPage === 1} 
-          className="px-4 text-black rounded-md mr-4 disabled:opacity-50"
-        >
-          <FaChevronLeft />
-        </button>
-        <span className="text-lg font-semibold">{`Page ${currentPage} of ${totalPages}`}</span>
-        <button 
-          onClick={handleNextPage} 
-          disabled={currentPage === totalPages} 
-          className="px-4 text-black rounded-md ml-4 disabled:opacity-50"
-        >
-          <FaChevronRight />
-        </button>
-      </div>
+      {/* PokemonList component */}
+      <PokemonList pokemonList={pokemonList} />
+
+      {/* Pagination component */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onNextPage={handleNextPage}
+        onPrevPage={handlePrevPage}
+      />
     </div>
   );
 };

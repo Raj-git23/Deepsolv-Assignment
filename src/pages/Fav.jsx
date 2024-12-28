@@ -12,6 +12,19 @@ const Favourites = () => {
 
   return (
     <div className="p-4">
+      {/* Background Image Layer with Opacity */}
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          backgroundImage: "url(../../images/af.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "cover",
+          backgroundRepeat: "no-repeat",
+          height: "100%",
+          opacity: 0.54, // Adjust opacity of the background image
+          zIndex: -1, // Ensures the background stays behind content
+        }}
+      />
       <h1 className="text-3xl font-bold mb-6">My Favorite Pokémon</h1>
 
       {favorites.length === 0 ? (

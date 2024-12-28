@@ -41,23 +41,24 @@ const Cards = ({ image, title, type, region, gender }) => {
 
   return (
     <>
-        <div className="flex">
-          <div className="relative cursor-pointer m-4 border-2 border-[#d2e3e3b5] rounded-xl group">
-            <img
-              src={image}
-              className="rounded-xl w-64 h-64 object-cover drop-shadow-[0px_3px_14px_rgba(10,10,10,0.1)] hover:scale-105 transition-transform duration-300 ease-in-out"
-              alt={title}
+      <div className="flex">
+        <div className="relative cursor-pointer m-4 border-2 border-[#6c6565c9] hover:drop-shadow-lg rounded-xl group">
+          <div className="absolute z-10 top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+            <LuHeart
+              className={`text-2xl ${
+                isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"
+              }`}
+              onClick={handleClick}
             />
-
-            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-              <LuHeart
-                className={`text-2xl ${
-                  isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"
-                }`}
-                onClick={handleClick}
-              />
-            </div>
-            <Link to={`/pokemon/${title}`} state={{ img: image }}>
+          </div>
+          
+          <Link to={`/pokemon/${title}`} state={{ img: image }}>
+          
+          <img
+            src={image}
+            className="rounded-xl w-64 h-64 object-cover drop-shadow-[3px_8px_6px_rgba(0,0,2,0.5)] hover:scale-105 transition-transform duration-300 ease-in-out"
+            alt={title}
+          />          
 
             <div className="relative bottom-0 left-0 w-full bg-gradient-to-t bg-[#fff] border-2 border-[#d2e3e3b5] p-2 rounded-b-xl">
               <p className="text-[#0a8d75e0] text-2xl font-semibold">{title}</p>
@@ -75,10 +76,9 @@ const Cards = ({ image, title, type, region, gender }) => {
 
               <p className="text-black/50 text-sm">{region}</p>
             </div>
-            </Link>
-          </div>
+          </Link>
         </div>
-      
+      </div>
     </>
   );
 };

@@ -9,7 +9,7 @@ const NavLinks = ({ links, handleClick }) => (
       <NavLink
         key={item.name}
         to={item.to}
-        className="flex flex-row px-4 justify-start items-center my-6 text-md font-medium text-gray-300 hover:text-white/75"
+        className="flex flex-row px-4 justify-start items-center my-6 text-xl font-medium text-white hover:text-white/75"
         onClick={() => handleClick && handleClick()}
       >
         {item.name}
@@ -30,7 +30,16 @@ const SideBar = () => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="md:flex hidden h-screen flex-col w-[240px] pt-8 px-4 bg-[#1b1515]">
+      <div
+        className="md:flex hidden h-screen flex-col w-[240px] pt-8 px-4"
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(../../images/d.jpg)",
+          backgroundSize: "cover", // Zooms in the image to cover the entire div
+          backgroundPosition: "center", // Centers the image within the div
+          backgroundRepeat: "no-repeat", // Prevents the image from repeating
+        }}
+      >
         <img
           src={logo}
           alt="logo"
@@ -59,6 +68,11 @@ const SideBar = () => {
         className={`absolute top-0 h-screen w-2/4 bg-gradient-to-tl from-white/10 to-[#141428] backdrop-blur-lg z-10 p-6 md:hidden smooth-transition ${
           mobileMenuOpen ? "left-0" : "-left-full"
         }`}
+        style={{
+          backgroundImage: "url(/path-to-your-image.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <img
           src={logo}
