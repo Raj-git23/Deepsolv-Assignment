@@ -1,8 +1,110 @@
-# React + Vite
+# Pokemon Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Pokemon Explorer is a React-based web application that allows users to explore a collection of Pokémon. The application includes filtering by type, pagination for easier browsing, and a loading indicator for better user experience.
 
-Currently, two official plugins are available:
+## Features
+- **Filter by Type**: Users can filter the Pokémon list by specific types (e.g., Fire, Water, Grass).
+- **Pagination**: Browse Pokémon with paginated results, improving navigation.
+- **Loader**: Displays a GIF loader while data is being fetched from the API.
+- **Responsive Design**: Optimized for desktop and mobile devices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- **Frontend**: React, Tailwind CSS
+- **API**: [PokéAPI](https://pokeapi.co/)
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v14 or later)
+- npm or yarn
+
+### Installation
+1. Create a folder
+
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/Raj-git23/Deepsolv-Assignment.git
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn start
+   ```
+
+4. Open the application in your browser:
+   ```
+   http://localhost:5173
+   ```
+
+## Folder Structure
+```
+.
+├── public
+│   ├── images              # Contains other static assets
+│   └── index.html
+├── src
+│   ├── components
+│   ├── pages
+│   ├── App.js              # Main application entry point
+│   ├── main.js            # React DOM rendering
+│   └── styles.css          # Tailwind CSS styles
+├── package.json
+└── README.md
+```
+
+## Key Components
+### 1. **Filter Component**
+- Allows users to filter Pokémon by specific types.
+- Passes the selected type back to the parent component.
+
+### 2. **PokemonList Component**
+- Displays a grid of Pokémon cards.
+- Renders a subset of the list based on pagination.
+
+### 3. **Pagination Component**
+- Allows users to navigate between pages.
+- Handles `onNextPage` and `onPrevPage` events.
+
+### 4. **Loader Component**
+- Displays a GIF while data is being fetched.
+- Enhances user experience during API calls.
+
+## API Integration
+- Fetches Pokémon data from [PokéAPI](https://pokeapi.co/).
+- Each Pokémon includes:
+  - Name
+  - Image
+  - Types
+
+## Deployment
+1. Build the project:
+   ```bash
+   npm run build
+   # or
+   yarn build
+   ```
+
+2. Deploy the `build` folder to your preferred hosting service (e.g., Netlify, Vercel, GitHub Pages).
+
+## Contributing
+Feel free to open issues and submit pull requests to improve the project. Contributions are always welcome!
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgments
+- Thanks to [PokéAPI](https://pokeapi.co/) for providing the API.
+- Inspired by the world of Pokémon.
+
+---
+
