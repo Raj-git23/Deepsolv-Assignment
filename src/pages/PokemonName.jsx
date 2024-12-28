@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const PokemonName = () => {
-  const { name } = useParams(); 
+  const { name } = useParams();
   const location = useLocation();
-  const { img } = location.state || {}; 
+  const { img } = location.state || {};
 
-  const [pokemonDetails, setPokemonDetails] = useState(null); 
+  const [pokemonDetails, setPokemonDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
 
- 
   useEffect(() => {
     const fetchPokemonDetails = async () => {
       try {
@@ -34,55 +34,79 @@ const PokemonName = () => {
   }, [name]);
 
   // Display loading or error message if needed
-  if (loading) return <p>Loading Pokémon details...</p>;
+  if (loading) return <p><Loader /></p>;
   if (error) return <p>Error: {error}</p>;
 
+  console.log(pokemonDetails.sprites.other);
+
   return (
-    <>
-      <div className="flex items-center">
-        {img && <img src={img} alt={name} className=" mb-4" />}
-        <h1 className="text-8xl font-bold mb-4 pl-16">{name}</h1>
+    <div className="relative">
+      <div className="flex flex-col w-full md:flex-row md:items-center">
+        {img && <img src={img} alt={name} className="" />}
+        <h1 className="text-5xl min-[500px]:text-8xl font-bold mb-4 pl-2 sm:pl-4">
+          {name}
+        </h1>
       </div>
-      <div className="flex flex-col justify-center">
+      
+      {/* Background Image Layer with Opacity */}
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          backgroundImage: `url(${pokemonDetails.sprites.other.dream_world.front_default})`,
+          backgroundSize: "cover",
+          backgroundPosition: "cover",
+          backgroundRepeat: "no-repeat",
+          opacity: 0.15,
+          zIndex: -1, 
+        }}
+      />
+
+      <div className="flex flex-col mt-4 justify-center">
         {pokemonDetails && (
-          <div className="border p-6 rounded shadow-lg pl-10">
-            <h2 className="text-4xl font-semibold">Details:</h2>
-            <div className="grid grid-cols-2 pl-10 gap-2 my-4">
-              <p className="text-lg mt-2">
-                <strong>Type:</strong>{" "}
+          <div className="sm:p-6 rounded shadow-lg pl-8 sm:pl-10">
+            <h2 className="text-2xl sm:text-4xl font-semibold">Details:</h2>
+            <div className="sm:grid grid-cols-2 pl-4 sm:pl-10 gap-2 my-4 sm:text-xl space-y-3 mt-2">
+              <p>
+                <span className="font-bold">Type:</span>{" "}
                 {pokemonDetails.types.map((type) => type.type.name).join(", ")}
               </p>
-              <p className="text-lg mt-2">
-                <strong>Height:</strong> {pokemonDetails.height / 10} m
+              <p>
+                <span className="font-bold">Height:</span>{" "}
+                {pokemonDetails.height / 10} m
               </p>
-              <p className="text-lg mt-2">
-                <strong>Weight:</strong> {pokemonDetails.weight / 10} kg
+              <p>
+                <span className="font-bold">Weight:</span>{" "}
+                {pokemonDetails.weight / 10} kg
               </p>
-              <p className="text-lg mt-2">
-                <strong>Abilities:</strong>{" "}
+              <p>
+                <span className="font-bold">Abilities:</span>{" "}
                 {pokemonDetails.abilities
                   .map((ability) => ability.ability.name)
                   .join(", ")}
               </p>
-              <p className="text-lg mt-2">
-                <strong>Base Experience:</strong>{" "}
+              <p>
+                <span className="font-bold">Base Experience:</span>{" "}
                 {pokemonDetails.base_experience}
               </p>
-              <p className="text-lg mt-2">
-                <strong>Stats:</strong>
+              </div>
+              <p className="text-xl pl-6 m-4">
+                <span className="font-bold">Stats:</span>
               </p>
-            
-            <ul className="grid grid-cols-2 gap-4">
-              {pokemonDetails.stats.map((stat) => (
-                <li key={stat.stat.name} className="text-lg space-y-2">
-                  <span className="font-bold">{stat.stat.name.toUpperCase()}</span>: {stat.base_stat}
-                </li>
-              ))}
-            </ul></div>
+
+              <ul className="md:grid grid-cols-2 pl-16 pb-4 gap-4">
+                {pokemonDetails.stats.map((stat) => (
+                  <li key={stat.stat.name} className="sm:text-lg space-y-2">
+                    <span className="font-bold">
+                      {stat.stat.name.toUpperCase()}
+                    </span>
+                    : {stat.base_stat}
+                  </li>
+                ))}
+              </ul>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

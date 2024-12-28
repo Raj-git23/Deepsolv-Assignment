@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import Filter from "../components/Filter";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -40,7 +41,6 @@ const Home = () => {
         (page - 1) * itemsPerPage
       }`;
       if (type) {
-        // Fetch Pokémon of selected type
         url = `https://pokeapi.co/api/v2/type/${type}`;
       }
 
@@ -49,7 +49,6 @@ const Home = () => {
 
       let pokemonDetails = [];
       if (type) {
-        // Get Pokémon details for the selected type
         pokemonDetails = await Promise.all(
           data.pokemon.map(async (poke) => {
             const pokeResponse = await fetch(poke.pokemon.url);
@@ -68,7 +67,6 @@ const Home = () => {
           })
         );
       } else {
-        // Get general Pokémon list without filtering by type
         pokemonDetails = await Promise.all(
           data.results.map(async (pokemon) => {
             const pokeResponse = await fetch(pokemon.url);
@@ -98,11 +96,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchTypes(); // Fetch all Pokémon types when the component mounts
+    fetchTypes();
   }, []);
 
   useEffect(() => {
-    fetchPokemons(selectedType, currentPage); // Fetch Pokémon when the page or selected type changes
+    fetchPokemons(selectedType, currentPage);
   }, [selectedType, currentPage]);
 
   const handleNextPage = () => {
@@ -113,7 +111,7 @@ const Home = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><Loader /></div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -122,13 +120,13 @@ const Home = () => {
       <div
         className="absolute top-0 left-0 w-full h-full"
         style={{
-          backgroundImage: "url(../../images/c.webp)",
+          backgroundImage: "url(../../images/i.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "cover",
           backgroundRepeat: "no-repeat",
           height: "100%",
-          opacity: 0.25, // Adjust opacity of the background image
-          zIndex: -1, // Ensures the background stays behind content
+          opacity: 0.25,
+          zIndex: -1, 
         }}
       />
       

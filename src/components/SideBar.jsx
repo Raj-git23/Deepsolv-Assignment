@@ -34,10 +34,10 @@ const SideBar = () => {
         className="md:flex hidden h-screen flex-col w-[240px] pt-8 px-4"
         style={{
           backgroundImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(../../images/d.jpg)",
-          backgroundSize: "cover", // Zooms in the image to cover the entire div
-          backgroundPosition: "center", // Centers the image within the div
-          backgroundRepeat: "no-repeat", // Prevents the image from repeating
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url(../../images/d.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <img

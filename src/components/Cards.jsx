@@ -74,7 +74,7 @@ const Cards = ({ image, title, type, region, gender }) => {
                 </p>
               )}
 
-              <p className="text-black/50 text-sm">{region}</p>
+
             </div>
           </Link>
         </div>

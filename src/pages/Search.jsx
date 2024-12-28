@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Cards from "../components/Cards";
+import Loader from "../components/Loader";
 
 const Search = () => {
   const { searchTerm } = useParams();
@@ -30,7 +31,7 @@ const Search = () => {
   }, [searchTerm]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><Loader /></div>;
   }
 
   if (error) {
@@ -44,6 +45,18 @@ const Search = () => {
         Showing results for {searchTerm}
       </h2>
 
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          backgroundImage: "url(../../images/c.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "cover",
+          backgroundRepeat: "no-repeat",
+          height: "100%",
+          opacity: 0.25,
+          zIndex: -1, 
+        }}
+      />
 
       {pokemonData && (
         <Cards
