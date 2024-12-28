@@ -3,6 +3,7 @@ import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import Filter from "../components/Filter";
 import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -112,7 +113,7 @@ const Home = () => {
   };
 
   if (loading) return <div><Loader /></div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div><Error /></div>;
 
   return (
     <div className="flex relative flex-col items-center">

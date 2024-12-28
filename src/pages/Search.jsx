@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Cards from "../components/Cards";
 import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 const Search = () => {
   const { searchTerm } = useParams();
@@ -35,7 +36,7 @@ const Search = () => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <Error />;
   }
 
 

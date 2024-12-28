@@ -69,7 +69,8 @@ const SideBar = () => {
           mobileMenuOpen ? "left-0" : "-left-full"
         }`}
         style={{
-          backgroundImage: "url(/path-to-your-image.jpg)",
+          backgroundImage:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url(../../images/d.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

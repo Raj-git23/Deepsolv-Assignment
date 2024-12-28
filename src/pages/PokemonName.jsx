@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 const PokemonName = () => {
   const { name } = useParams();
@@ -35,7 +36,7 @@ const PokemonName = () => {
 
   // Display loading or error message if needed
   if (loading) return <p><Loader /></p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p><Error /></p>;
 
   console.log(pokemonDetails.sprites.other);
 
