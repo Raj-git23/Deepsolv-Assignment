@@ -20,46 +20,43 @@ Pokemon Explorer is a React-based web application that allows users to explore a
 - npm or yarn
 
 ### Installation
-1. Clone the repository:
+1. Create a folder
+
+2. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/pokemon-explorer.git
-   cd pokemon-explorer
+   git clone https://github.com/Raj-git23/Deepsolv-Assignment.git
    ```
 
-2. Install dependencies:
+3. Install dependencies:
    ```bash
    npm install
    # or
    yarn install
    ```
 
-3. Start the development server:
+4. Start the development server:
    ```bash
-   npm start
+   npm run dev
    # or
    yarn start
    ```
 
 4. Open the application in your browser:
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
 ## Folder Structure
 ```
 .
 ├── public
-│   ├── loader.gif          # GIF used for loading state
 │   ├── images              # Contains other static assets
 │   └── index.html
 ├── src
 │   ├── components
-│   │   ├── Filter.js       # Filter by type component
-│   │   ├── Loader.js       # Loader component
-│   │   ├── Pagination.js   # Pagination component
-│   │   └── PokemonList.js  # Display list of Pokemon
+│   ├── pages
 │   ├── App.js              # Main application entry point
-│   ├── index.js            # React DOM rendering
+│   ├── main.js            # React DOM rendering
 │   └── styles.css          # Tailwind CSS styles
 ├── package.json
 └── README.md
