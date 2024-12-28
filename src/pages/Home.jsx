@@ -30,11 +30,11 @@ const Home = () => {
             const pokeData = await pokeResponse.json();
             
             return {
-              name: capitalizeFirstLetter(pokeData.name), // Capitalize name
-              image: pokeData.sprites.other['official-artwork'].front_default, // Image URL
-              type: capitalizeFirstLetter(pokeData.types.map((type) => type.type.name).join(', ')), // Type(s)
-              gender: pokeData.gender || 'Unknown', // Gender (you can modify based on available data)
-              region: pokeData.generation ? pokeData.generation.name : 'Unknown', // Region (generation as region)
+              name: capitalizeFirstLetter(pokeData.name), 
+              image: pokeData.sprites.other['official-artwork'].front_default, 
+              type: capitalizeFirstLetter(pokeData.types.map((type) => type.type.name).join(', ')), 
+              gender: pokeData.gender || 'Unknown',
+              region: pokeData.generation ? pokeData.generation.name : 'Unknown', 
             };
           })
         );

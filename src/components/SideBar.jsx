@@ -24,7 +24,6 @@ const SideBar = () => {
 
   const links = [
     { name: "Home", to: "/" },
-    { name: "About", to: "/about" },
     { name: "Favourites", to: "/favourites" },
   ];
 

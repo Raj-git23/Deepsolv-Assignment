@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Cards from "../components/Cards"; // Assuming Cards component is used to render each card
+import Cards from "../components/Cards"; 
 
 const Favourites = () => {
   const [favorites, setFavorites] = useState([]);
 
-  // Fetch favorite Pokémon from localStorage when the component mounts
+  // ---------------------- Fetching favorite Pokémon from localStorage when the component mounts
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(storedFavorites);
