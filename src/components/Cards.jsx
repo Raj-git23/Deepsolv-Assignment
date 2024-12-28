@@ -1,11 +1,17 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { IoMale, IoFemale } from "react-icons/io5";
 import { LuHeart } from "react-icons/lu"; // For the heart icon
 
 const Cards = ({ image, title, type, region, gender }) => {
 
-      // State to track if the Pokémon is a favorite
-  const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+  // Check if the Pokémon is a favorite when the component mounts
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isFav = favorites.some((pokemon) => pokemon.title === title);
+    setIsFavorite(isFav);
+  }, [title]);
 
   // Function to handle the click event on the heart icon
   const handleClick = () => {
@@ -18,23 +24,25 @@ const Cards = ({ image, title, type, region, gender }) => {
       title,
       type,
       region,
-      gender
+      gender,
     };
 
     // Store the favorite in localStorage
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    
+
     // Check if it's already in the favorites
-    if (!favorites.some(pokemon => pokemon.title === title)) {
+    if (!favorites.some((pokemon) => pokemon.title === title)) {
       favorites.push(pokemonData);
     } else {
       // Remove from favorites if already added
-      favorites = favorites.filter(pokemon => pokemon.title !== title);
+      favorites = favorites.filter((pokemon) => pokemon.title !== title);
     }
 
     // Update the localStorage with the new favorites list
     localStorage.setItem("favorites", JSON.stringify(favorites));
   };
+
+  
   return (
     <div className="flex">
       <div className="relative cursor-pointer m-4 border-2 border-[#d2e3e3b5] rounded-xl group">
@@ -44,11 +52,11 @@ const Cards = ({ image, title, type, region, gender }) => {
           alt={title}
         />
         
-        {/* Heart icon (hidden by default and shown on hover) */}
+        {/* Heart icon to toggle favorite state */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-        <LuHeart
-            className={`text-2xl ${isFavorite ? "text-red-500" : "text-gray-500"}`}
-            onClick={handleClick} 
+          <LuHeart
+            className={`text-2xl ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"}`}
+            onClick={handleClick}
           />
         </div>
         
