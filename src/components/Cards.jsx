@@ -3,19 +3,22 @@ import { IoMale, IoFemale } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { LuHeart } from "react-icons/lu"; // For the heart icon
 
-const Cards = ({ image, title, type, region, gender }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const Cards = ({ image, title, type, gender }) => {
+  const [isFav, setIsFav] = useState(false);
+
 
   // ------------------------- Checking if the Pokémon is a favorite when the component mounts
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const isFav = favorites.some((pokemon) => pokemon.title === title);
-    setIsFavorite(isFav);
+    const isFavo = favorites.some((pokemon) => pokemon.title === title);
+    setIsFav(isFavo);
   }, [title]);
+
+
 
   // -------------------------- Function to handle the click event on the heart icon
   const handleClick = () => {
-    setIsFavorite(!isFavorite);
+    setIsFavorite(!isFav);
 
     // Get the current Pokémon card data
     const pokemonData = {
@@ -26,17 +29,18 @@ const Cards = ({ image, title, type, region, gender }) => {
       gender,
     };
 
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+
 
     // ------------------------- Check if it's already in the favorites
-    if (!favorites.some((pokemon) => pokemon.title === title)) {
-      favorites.push(pokemonData);
+    if (!favs.some((pokemon) => pokemon.title === title)) {
+      favs.push(pokemonData);
     } else {
-      favorites = favorites.filter((pokemon) => pokemon.title !== title);
+      favs = favs.filter((pokemon) => pokemon.title !== title);
     }
 
     // ----------------------------- Update the localStorage with the new favorites list
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    localStorage.setItem("favorites", JSON.stringify(favs));
   };
 
   return (
@@ -46,7 +50,7 @@ const Cards = ({ image, title, type, region, gender }) => {
           <div className="absolute z-10 top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
             <LuHeart
               className={`text-2xl ${
-                isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"
+                isFav ? "fill-red-500 text-red-500" : "text-gray-500"
               }`}
               onClick={handleClick}
             />
@@ -73,7 +77,6 @@ const Cards = ({ image, title, type, region, gender }) => {
                   <IoFemale />
                 </p>
               )}
-
 
             </div>
           </Link>

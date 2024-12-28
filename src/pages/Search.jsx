@@ -6,7 +6,6 @@ import Error from "../components/Error";
 
 const Search = () => {
   const { searchTerm } = useParams();
-  console.log(searchTerm);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

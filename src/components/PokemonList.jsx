@@ -1,19 +1,20 @@
 import React from 'react';
 import Cards from '../components/Cards';
 
-const PokemonList = ({ pokemonList }) => {
+const PokemonList = ({ pokemonData }) => {
   return (
     <div className="flex flex-wrap justify-center">
-      {pokemonList.map((pokemon, index) => (
+      
+      {pokemonData.map((data, index) => (
         <Cards
           key={index}
-          image={pokemon.image}
-          title={pokemon.name}
-          type={pokemon.type}
-          region={pokemon.region}
-          gender={pokemon.gender}
+          image={data.image}
+          title={data.name}
+          type={data.type}
+          gender={data.gender}
         />
       ))}
+
     </div>
   );
 };

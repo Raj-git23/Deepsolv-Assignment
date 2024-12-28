@@ -4,6 +4,8 @@ import { RiCloseLine } from "react-icons/ri";
 import { HiOutlineMenu } from "react-icons/hi";
 
 const NavLinks = ({ links, handleClick }) => (
+  
+  
   <div className="mt-2">
     {links.map((item) => (
       <NavLink
@@ -17,6 +19,7 @@ const NavLinks = ({ links, handleClick }) => (
     ))}
   </div>
 );
+
 
 const SideBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,6 +51,7 @@ const SideBar = () => {
         <NavLinks links={links} />
       </div>
 
+
       {/* Mobile Sidebar Icon */}
       <div className="absolute md:hidden z-10 block top-6 right-3">
         {mobileMenuOpen ? (
@@ -62,6 +66,7 @@ const SideBar = () => {
           />
         )}
       </div>
+
 
       {/* Mobile Sidebar */}
       <div

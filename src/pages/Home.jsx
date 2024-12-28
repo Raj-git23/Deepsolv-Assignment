@@ -11,15 +11,15 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [types, setTypes] = useState([]); // To store all Pokemon types
-  const [selectedType, setSelectedType] = useState(""); // To store selected type
+  const [types, setTypes] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
 
-  const itemsPerPage = 12; // Number of Pokémon per page
+  const itemsPerPage = 12; 
 
   const capitalizeFirstLetter = (str) =>
     str.charAt(0).toUpperCase() + str.slice(1);
 
-  // Fetch all Pokémon types (like fire, water, etc.)
+  // Fetch Pokémon types
   const fetchTypes = async () => {
     try {
       const response = await fetch("https://pokeapi.co/api/v2/type");
@@ -61,9 +61,6 @@ const Home = () => {
                 pokeData.types.map((type) => type.type.name).join(", ")
               ),
               gender: pokeData.gender || "Unknown",
-              region: pokeData.generation
-                ? pokeData.generation.name
-                : "Unknown",
             };
           })
         );
@@ -79,16 +76,13 @@ const Home = () => {
                 pokeData.types.map((type) => type.type.name).join(", ")
               ),
               gender: pokeData.gender || "Unknown",
-              region: pokeData.generation
-                ? pokeData.generation.name
-                : "Unknown",
             };
           })
         );
       }
 
       setPokemonList(pokemonDetails);
-      setTotalPages(Math.ceil(data.count / itemsPerPage)); // Update the total pages
+      setTotalPages(Math.ceil(data.count / itemsPerPage)); 
       setLoading(false);
     } catch (err) {
       setError(err);
@@ -117,7 +111,7 @@ const Home = () => {
 
   return (
     <div className="flex relative flex-col items-center">
-      {/* Background Image Layer with Opacity */}
+
       <div
         className="absolute top-0 left-0 w-full h-full"
         style={{
@@ -135,18 +129,18 @@ const Home = () => {
       <Filter
         types={types}
         selectedType={selectedType}
-        onSelectType={setSelectedType}
+        onSelect={setSelectedType}
       />
 
       {/* PokemonList component */}
-      <PokemonList pokemonList={pokemonList} />
+      <PokemonList pokemonData={pokemonList} />
 
       {/* Pagination component */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onNextPage={handleNextPage}
-        onPrevPage={handlePrevPage}
+        nextPage={handleNextPage}
+        prevPage={handlePrevPage}
       />
     </div>
   );

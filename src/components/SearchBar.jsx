@@ -21,6 +21,7 @@ const SearchBar = () => {
       <label htmlFor="search-field" className="sr-only">
         Search for any Pokémon
       </label>
+
       <div className="flex flex-row justify-start items-center">
         <FiSearch className="w-6 h-6 ml-4 text-black" />
         <input
@@ -34,6 +35,7 @@ const SearchBar = () => {
           className="sm:w-4/5 md:w-11/12 bg-transparent border-black/60 border-b-2 focus-within:border-b-3 outline-none placeholder-black-500 text-base text-black p-3"
         />
       </div>
+      
     </form>
   );
 }
